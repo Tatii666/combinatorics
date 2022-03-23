@@ -6,32 +6,31 @@
 #include <vector>
 #include <boost/timer.hpp>
 
-using namespace std;
 
-void PrintArr(vector<int>& inputArr)
+void PrintArr(std::vector<int>& inputArr)
 {
     for (int i = 0; i < inputArr.size(); ++i)
-        cout << inputArr[i] << " ";
-    cout << endl;
+        std::cout << inputArr[i] << " ";
+    std::cout << std::endl;
 }
 
 int main()
 {
-    cout << "Enter the number of array elements: ";
-    int numberOfElems;
-    cin >> numberOfElems;
-    cout << "\n";
+    std::cout << "Please, enter the number of elements: ";
+    int amountOfEl;
+    std::cin >> amountOfEl;
+    std::cout << "\n";
 
     boost::timer t;
     t.restart();
 
-    int numberOfElemsWithBorders = numberOfElems + 2;
+    int amountOfElWithBorders = amountOfEl + 2;
 
-    vector<int> currentPermutation(numberOfElemsWithBorders);
-    vector<int> reversePermutation(numberOfElemsWithBorders);
-    vector<int> direction(numberOfElemsWithBorders);
+    std::vector<int> currentPermutation(amountOfElWithBorders);
+    std::vector<int> reversePermutation(amountOfElWithBorders);
+    std::vector<int> direction(amountOfElWithBorders);
 
-    for (int i = 1; i <= numberOfElems; ++i)
+    for (int i = 1; i <= amountOfEl; ++i)
     {
         currentPermutation[i] = i;
         reversePermutation[i] = i;
@@ -39,15 +38,15 @@ int main()
     }
 
     direction[0] = 0;
-    currentPermutation[0] = numberOfElems + 1;
-    currentPermutation.back() = numberOfElems + 1;
+    currentPermutation[0] = amountOfEl + 1;
+    currentPermutation.back() = amountOfEl + 1;
 
     int border = 0;
 
     while (border != 1)
     {
-        PrintArr(currentPermutation);
-        border = numberOfElems;
+        //PrintArr(currentPermutation);
+        border = amountOfEl;
 
         while (currentPermutation[reversePermutation[border] + direction[border]] >
             border && border > 1)
@@ -56,13 +55,13 @@ int main()
             border = border - 1;
         }
 
-        swap(currentPermutation[reversePermutation[border]],
+        std::swap(currentPermutation[reversePermutation[border]],
             currentPermutation[reversePermutation[border] + direction[border]]);
-        swap(reversePermutation[currentPermutation[reversePermutation[border]]],
+        std::swap(reversePermutation[currentPermutation[reversePermutation[border]]],
             reversePermutation[border]);
     }
 
     double duration = t.elapsed();
-    cout << duration << endl;
+    std::cout << duration << std::endl;
 }
 
